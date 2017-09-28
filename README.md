@@ -10,6 +10,11 @@ packets between the Boom Remote iOS app and the Boom service running on my
 Mac.
 
 ## Usage
+Boom Remote must be enabled on the Boom server:
+
+<img src="https://user-images.githubusercontent.com/1694586/30945468-880e6c26-a3cc-11e7-827c-74a8a2a40598.png" width="200">
+
+
 No arguments means connect to first available Boom server (Allow/Disallow
 prompt appears on Mac, and little green light on Boom tray icon appears):
 ```python
@@ -21,10 +26,18 @@ In [2]: client = Boom()
 2017-09-27 19:26:29,874 INFO Login result: Accepted
 ```
 
+You can also use any of the attributes for the service to specify which server (if you have more than one):
+```python
+In [3]: client = Boom(server='rmbp13.local.')
+2017-09-27 21:43:26,022 INFO Found 1.6.1-sup-rmbp13._boom2._tcp.local. service: ServiceInfo(type='_boom2._tcp.local.', name='1.6.1-sup-rmbp13._boom2._tcp.local.', address='192.168.1.163', port=58990, weight=0, priority=0, server='rmbp13.local.', properties={})
+2017-09-27 21:43:26,035 INFO Using first boom host found: ServiceInfo(type='_boom2._tcp.local.', name='1.6.1-sup-rmbp13._boom2._tcp.local.', address='192.168.1.163', port=58990, weight=0, priority=0, server='rmbp13.local.', properties={})
+2017-09-27 21:43:26,036 INFO Login result: Accepted
+```
+
 Get current preset:
 ```python
-In [3]: client.current_eq
-Out[3]:
+In [4]: client.current_eq
+Out[4]:
 {'DeviceProfile': {'internalSpeaker': {'0': 1.846993446350098,
    '1': 1.856241226196289,
    '10': 0.8442622423171997,
@@ -147,14 +160,14 @@ discovers the Boom service and port sending [Multicast_DNS](
 https://en.wikipedia.org/wiki/Multicast_DNS). It looks for any services
 of type `_boom2._tcp.local.` or `_boom3._tcp.local.`:
  
-![image](https://user-images.githubusercontent.com/1694586/30942004-3ecdfc0e-a3b6-11e7-8aa7-269724c39bd4.png)
+<img src="https://user-images.githubusercontent.com/1694586/30942004-3ecdfc0e-a3b6-11e7-8aa7-269724c39bd4.png" width="500">
 
 The mDNS response will contain any services discovered with name, IP address,
 port, and server name (~hostname). Once you know the address and port, you can
 connect and send a string with `1.3-someclient\n`. This will prompt the Boom
 server (Mac) to ask you to if you want to allow or disallow the connection:
 
-![image](https://user-images.githubusercontent.com/1694586/30942146-27d286fe-a3b7-11e7-8456-f653c41dd5c9.png)
+<img src="https://user-images.githubusercontent.com/1694586/30942146-27d286fe-a3b7-11e7-8456-f653c41dd5c9.png" height="200">
 
 Once the client is allowed, the server will send the current status of the
 Boom server, including presets, current player playing status, etc. There's a
