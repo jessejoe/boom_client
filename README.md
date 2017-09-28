@@ -193,3 +193,9 @@ TCP "conversation" or acknowledgement when sending data. Currently the client
 doesn't verify data, but in the future there could be a separate thread
 constantly watching the status updates which could be then checked that the
 status has indeed changed.
+
+## Why would you do this?
+
+I love automating things and am very particular about music and sound quality,
+and being able to control everything from scripts and shortcuts. This was also
+a cool opportunity to play with TCP/sockets, and also just to see if I could!
